@@ -1,0 +1,7 @@
+{
+  "env": {
+    "MONGODB_PW": "klaus123",
+    "JWT_KEY": "secret",
+    "API_KEY": " c1cce85d0e25d0c79f390e1deb03f9f9-c250c684-6cf94cbb"
+  }
+}
