@@ -18,11 +18,13 @@ Enter into the folder in the terminal
 ## COMMANDS
 
 COMMAND:
-npm install
+npm install 
+######
 For installing all the packages and dependencies used
 
 COMMAND:
 nodemon server
+######
 For starting the server
 
 The server starts on localhost:5000
