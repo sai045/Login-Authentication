@@ -14,6 +14,8 @@ Enter into the folder in the terminal
 5.express-validator
 6.mongoose
 7.jseonwebtoken
+8.googleapis
+9.nodemailer
 
 ## COMMANDS
 
