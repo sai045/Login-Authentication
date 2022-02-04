@@ -4,9 +4,6 @@ const User = require("../Models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const user = require("../Models/user");
-const mailgun = require("mailgun-js");
-const DOMAIN = "sandbox9b24365b3d6b4d748029f01d9b4e7936.mailgun.org";
-const mg = mailgun({ apiKey: process.env.API_KEY, domain: DOMAIN });
 
 const signin = async (req, res, next) => {
   const errors = validationResult(req);
@@ -93,15 +90,6 @@ const forgotpassword = async (req, res, next) => {
     const link = `http:localhost:5000/resetPassword/${existingUser.id}/${token}`;
     res.json({ link });
     console.log(link);
-    const data = {
-      from: "saivarshith3041@gmail.com",
-      to: email,
-      subject: "Hello",
-      html: `<p>your reset link <a href=${link}>Click Here</a></p>`,
-    };
-    mg.messages().send(data, function (error, body) {
-      console.log(body);
-    });
   } else {
     res.status(500).json({ message: "Email not registered" });
     return;
