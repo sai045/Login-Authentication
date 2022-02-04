@@ -3,7 +3,8 @@ const { validationResult } = require("express-validator");
 const User = require("../Models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const user = require("../Models/user");
+const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
 
 const signin = async (req, res, next) => {
   const errors = validationResult(req);
@@ -88,6 +89,53 @@ const forgotpassword = async (req, res, next) => {
 
     const token = jwt.sign(payload, secret, { expiresIn: "15m" });
     const link = `http:localhost:5000/resetPassword/${existingUser.id}/${token}`;
+
+    const oAuth2Client = new google.auth.OAuth2(
+      process.env.Client_ID,
+      process.env.Client_secret,
+      process.env.redirect_url
+    );
+    oAuth2Client.setCredentials({ refresh_token: process.env.refresh_token });
+
+    async function sendMail() {
+      try {
+        const accessToken = await oAuth2Client.getAccessToken();
+
+        const transport = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            type: "OAuth2",
+            user: process.env.USER,
+            clientId: process.env.Client_ID,
+            clientSecret: process.env.Client_secret,
+            refreshToken: process.env.refresh_token,
+            accessToken: accessToken,
+          },
+        });
+
+        const mailOptions = {
+          from: "saivarshith <saivarshith3041@gmail.com>",
+          to: payload.email,
+          subject: "Reset Link",
+          text: `Reset link is ${link}`,
+          html: `<a href=${link}>Click Here for reset</a>`,
+        };
+
+        const result = await transport.sendMail(mailOptions);
+        return result;
+      } catch (err) {
+        return err;
+      }
+    }
+
+    sendMail()
+      .then((result) => {
+        console.log("email sent", result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     res.json({ link });
     console.log(link);
   } else {
