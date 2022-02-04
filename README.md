@@ -1,12 +1,12 @@
 # Login-Authentication
-##The Module is about login authentication using Json WebToken in NodeJs + MongoDB environment
-##The functionalities present are Login Signup and Reset Password 
+## The Module is about login authentication using Json WebToken in NodeJs + MongoDB environment
+## The functionalities present are Login Signup and Reset Password 
 
 For running this folder
 download the zip code
 enter into the folder in the terminal
 
-#Packages Used
+# Packages Used
 1.nodemon
 2.express
 3.body-parser
