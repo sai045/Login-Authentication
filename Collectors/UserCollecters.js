@@ -7,11 +7,11 @@ const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 
 const signin = async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    console.log(errors);
-    return next(Error("InValid Input", 422));
-  }
+//   const errors = validationResult(req);
+//   if (!errors.isEmpty()) {
+//     console.log(errors);
+//     return next(Error("InValid Input", 422));
+//   }
   bcrypt.hash(req.body.password, 10, async (err, hash) => {
     if (err) {
       return res.status(500).json({ error: err });
